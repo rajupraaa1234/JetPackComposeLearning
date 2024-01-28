@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 @Preview(heightDp = 300)
 @Composable
 fun DisplayItem() {
-   //RenderItem(androidx.core.R.drawable.ic_call_decline, "Software Developer", "Raju kumar")
+    //RenderItem(androidx.core.R.drawable.ic_call_decline, "Software Developer", "Raju kumar")
 //    Column(modifier = Modifier.verticalScroll(rememberScrollState() )) {   (all Item Will render at a time)
 //        getBatchData().map { item->
 //             RenderItem(Img = item.Img, title = item.Degignation, name = item.name)
@@ -38,7 +38,7 @@ fun DisplayItem() {
 //    }
 
     LazyColumn(content = {            // Like RecyclerView  (Only visible Item Will render)
-        items(getBatchData()){item->
+        items(getBatchData()) { item ->
             RenderItem(Img = item.Img, title = item.Degignation, name = item.name)
         }
     })
@@ -85,7 +85,7 @@ private fun titleWithName(title: String, name: String, modifier: Modifier) {
     }
 }
 
-data class Batch(val Img : Int,val name : String,val Degignation : String);
+data class Batch(val Img: Int, val name: String, val Degignation: String);
 
 fun getBatchData(): MutableList<Batch> {
     val list = mutableListOf<Batch>();
@@ -145,5 +145,5 @@ fun getBatchData(): MutableList<Batch> {
             "Software Developer"
         )
     );
-  return list;
+    return list;
 }
