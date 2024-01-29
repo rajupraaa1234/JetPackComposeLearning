@@ -2,6 +2,12 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="CardDetails">
+        <State />
+      </entry>
+      <entry key="CardListItem">
+        <State />
+      </entry>
       <entry key="DisplayItem">
         <State />
       </entry>

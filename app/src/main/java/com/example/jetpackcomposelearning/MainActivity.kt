@@ -10,20 +10,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collection.mutableVectorOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,13 +31,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jetpackcomposelearning.ui.theme.JetPackComposeLearningTheme
+import com.example.jetpackcomposelearning.Utility.Pages
+import com.example.jetpackcomposelearning.screens.CardDetails
+import com.example.jetpackcomposelearning.screens.CardListingScreen
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CoroutineScope(Dispatchers.IO).launch {   // for Performance purpose
+            DataManager.loadAssetsFromFile(applicationContext);
+        }
         setContent {
-            DisplayItem()
+            App()
+            //DisplayItem()
 //            JetPackComposeLearningTheme {
 //                // A surface container using the 'background' color from the theme
 //                Surface(
@@ -56,6 +59,20 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+}
+
+@Composable
+fun App(){
+   if(DataManager.isDataLoaded.value){
+       if(DataManager.currentPages.value == Pages.LISTING){
+           CardListingScreen(data = DataManager.data) {
+                DataManager.switchPages(it);
+           }
+       }else{
+           DataManager.currentCard?.let { CardDetails(cards = it) }
+       }
+
+   }
 }
 
 @Composable
@@ -143,8 +160,9 @@ fun renderItem() {
             
         )
         Column(
-            modifier = Modifier.background(Color.Cyan)
-                .clickable { Log.d("click ","On Text") }
+            modifier = Modifier
+                .background(Color.Cyan)
+                .clickable { Log.d("click ", "On Text") }
                 .padding(10.dp)
                 .fillMaxWidth()
 
