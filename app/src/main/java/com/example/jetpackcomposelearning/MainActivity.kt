@@ -9,6 +9,8 @@ import com.example.jetpackcomposelearning.Api.TweestyApi
 import com.example.jetpackcomposelearning.Utility.Pages
 import com.example.jetpackcomposelearning.screens.CardDetails
 import com.example.jetpackcomposelearning.screens.CardListingScreen
+import com.example.jetpackcomposelearning.screens.CategoryScreen
+import com.example.jetpackcomposelearning.screens.DetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,10 +28,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         GlobalScope.launch {
             var response = tweestyApi.getCategories();
-            Log.d("Response",response.body().toString())
+            Log.d("Response",response.body()!!.distinct().toString())
         }
         setContent {
-            App()
+//            App()
+            //CategoryScreen()
+            DetailsScreen()
         }
     }
 
