@@ -5,6 +5,11 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.jetpackcomposelearning.Api.TweestyApi
 import com.example.jetpackcomposelearning.Utility.Pages
 import com.example.jetpackcomposelearning.screens.CardDetails
@@ -31,9 +36,9 @@ class MainActivity : ComponentActivity() {
             Log.d("Response",response.body()!!.distinct().toString())
         }
         setContent {
-//            App()
+           App()
             //CategoryScreen()
-            DetailsScreen()
+            //DetailsScreen()
         }
     }
 
@@ -41,16 +46,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun App(){
-   if(DataManager.isDataLoaded.value){
-       if(DataManager.currentPages.value == Pages.LISTING){
-           CardListingScreen(data = DataManager.data) {
-                DataManager.switchPages(it);
-           }
-       }else{
-           DataManager.currentCard?.let { CardDetails(cards = it) }
-       }
+   val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "category"){
+        composable(route="category"){
+            CategoryScreen{
+                navController.navigate("detail/${it}")
+            }
+        }
+        composable(
+            route = "detail/{category}",
+            arguments = listOf(navArgument("category") { type = NavType.StringType })
+        ) {
+            DetailsScreen()
+        }
 
-   }
+
+
+    }
 }
 
 
