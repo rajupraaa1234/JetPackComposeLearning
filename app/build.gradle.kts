@@ -1,6 +1,9 @@
 plugins {
+
     id("com.android.application")
+    id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -47,6 +50,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+}
+kapt {
+    correctErrorTypes = true
+}
+
+hilt {
+    enableAggregatingTask = true
 }
 
 dependencies {
@@ -67,4 +78,38 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+
+    val lifecycle_version = "2.7.0"
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+
+    // coroutines
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0-RC2")
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+    //retrofit for Api
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    // GSON
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+
+    // ViewModel and LiveData for MVVM architecture
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
+    implementation ("androidx.lifecycle:lifecycle-livedata:2.3.1")
+
+    // Navigation
+    val nav_version = "2.7.6"
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
+
 }
