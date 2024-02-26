@@ -13,16 +13,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CoroutineScope(Dispatchers.IO).launch {   // for Performance purpose
-            DataManager.loadAssetsFromFile(applicationContext);
-        }
+//        CoroutineScope(Dispatchers.IO).launch {   // for Performance purpose
+//            DataManager.loadAssetsFromFile(applicationContext);
+//        }
+        lifecycle.addObserver(Observer())    // Need to register Observers in Observer class
         setContent {
             App()
         }
